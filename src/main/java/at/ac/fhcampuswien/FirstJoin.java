@@ -33,6 +33,7 @@ public class FirstJoin extends ListenerAdapter {
         assert adminChannel != null;
         adminChannel.sendMessage("New member joined: " + user).queue();
         adminChannel.sendMessage("Write your desired nickname in this channel:").queue();
+
     }
 
 

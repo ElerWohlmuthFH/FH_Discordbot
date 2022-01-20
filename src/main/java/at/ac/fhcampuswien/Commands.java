@@ -9,9 +9,9 @@ public class Commands extends ListenerAdapter {
         String[] args = event.getMessage().getContentRaw().split(" ");
         User user = event.getAuthor();
 
-        if(args[0].equalsIgnoreCase(Main.prefix + "test")) {
+        if(args[0].equalsIgnoreCase(Main.prefix + "whoami")) {
             event.getChannel().sendTyping().queue();
-            event.getChannel().sendMessage("Hello, World!" + user).queue();
+            event.getChannel().sendMessage("" + user).queue();
         }
     }
 }

@@ -6,23 +6,37 @@ import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
+import java.io.FileReader;
+import java.util.Properties;
+
 import javax.security.auth.login.LoginException;
 
 class Main {
     public static JDA jda;
-    public static String prefix = "/";
+    public static String prefix;
 
     public static void main(String[] args) throws LoginException {
 
-        String token = "OTEwODUxNTQ1NDMwNjM0NTU2.YZY2mw.fxtZISrOrN7JLg4WLEdF4aE_2G8";
+        try(FileReader reader = new FileReader("config")){
+            Properties properties = new Properties();
+            properties.load(reader);
 
-        jda = JDABuilder.createDefault(token).build();
-        jda.getPresence().setStatus(OnlineStatus.IDLE);
-        jda.getPresence().setActivity(Activity.playing("Hello World"));
+            prefix = properties.getProperty("PREFIX"); //sets prefix from config file
+            String token = properties.getProperty("TOKEN"); //sets discord bot token from config file
 
-        jda.addEventListener(new Commands());
+            jda = JDABuilder.createDefault(token).build();
+            jda.getPresence().setStatus(OnlineStatus.IDLE);
+            jda.getPresence().setActivity(Activity.playing("ONLINE"));
 
-        jda = JDABuilder.createDefault(token).enableIntents(GatewayIntent.GUILD_MEMBERS).build();
-        jda.addEventListener(new FirstJoin());
+            jda.addEventListener(new Commands());
+
+            jda = JDABuilder.createDefault(token).enableIntents(GatewayIntent.GUILD_MEMBERS).build();
+            jda.addEventListener(new FirstJoin());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
+
 }
