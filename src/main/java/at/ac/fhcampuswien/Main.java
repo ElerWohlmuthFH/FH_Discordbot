@@ -22,16 +22,25 @@ class Main {
             properties.load(reader);
 
             prefix = properties.getProperty("PREFIX"); //sets prefix from config file
-            String token = properties.getProperty("TOKEN"); //sets discord bot token from config file
 
+            String token = properties.getProperty("TOKEN"); //sets discord bot token from config file
             jda = JDABuilder.createDefault(token).build();
+            jda = JDABuilder.createDefault(token).enableIntents(GatewayIntent.GUILD_MEMBERS).build();
+
             jda.getPresence().setStatus(OnlineStatus.IDLE);
-            jda.getPresence().setActivity(Activity.playing("ONLINE"));
+
+            String activity = properties.getProperty("ACTIVITY"); //sets activity from config file
+            jda.getPresence().setActivity(Activity.playing(activity));
+
+            Setup setUp = new Setup();
+            jda.addEventListener(setUp);
+            jda.addEventListener(new FirstJoin());
 
             jda.addEventListener(new Commands());
+            jda.addEventListener(new Cats());
 
-            jda = JDABuilder.createDefault(token).enableIntents(GatewayIntent.GUILD_MEMBERS).build();
-            jda.addEventListener(new FirstJoin());
+
+            System.out.println("BOT IS ONLINE");
 
         } catch (Exception e) {
             e.printStackTrace();

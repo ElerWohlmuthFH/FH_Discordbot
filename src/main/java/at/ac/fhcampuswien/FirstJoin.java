@@ -6,15 +6,27 @@ import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
+import java.io.FileReader;
 import java.util.Objects;
+import java.util.Properties;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicLong;
 
 
 public class FirstJoin extends ListenerAdapter {
 
+//    private final AtomicLong loginChannelId;
     String loginChannelString = "920973912211353650";
-    long loginChannel = 920973912211353650L;
+//    long loginChannel = 920973912211353650L;
     long roleEveryone = 920985272760537088L;
+
+//    public FirstJoin(AtomicLong loginChannelId) {
+//        this.loginChannelId = loginChannelId;
+//    }
+//    AtomicLong loginChannelID = new AtomicLong(); //create login Channel
+
+    String loginChannelId;
+
 
     @Override
     public void onGuildMemberJoin(GuildMemberJoinEvent event) {
@@ -22,25 +34,48 @@ public class FirstJoin extends ListenerAdapter {
         User user = event.getUser();    // Get the user that joined.
         JDA client = event.getJDA();    // Get the already existing JDA instance.
 
+//        event.getGuild().createTextChannel("login channel").queue(textChannel -> { //create login channel
+//            loginChannelID.set(textChannel.getIdLong());
+//            // hier kannst dann id verwenden
+//        });
+        try(
+                FileReader reader = new FileReader("config")){
+            Properties properties = new Properties();
+            properties.load(reader);
 
-        TextChannel adminChannel = guild.getTextChannelById(loginChannel);
+            loginChannelId = properties.getProperty("LOGINCHANNELID"); //sets channel ID from config file
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        TextChannel loginChannel = guild.getTextChannelById(loginChannelId);
 
         try {
             TimeUnit.SECONDS.sleep(1);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        assert adminChannel != null;
-        adminChannel.sendMessage("New member joined: " + user).queue();
-        adminChannel.sendMessage("Write your desired nickname in this channel:").queue();
+        assert loginChannel != null;
+        loginChannel.sendMessage("New member joined: " + user).queue();
+        loginChannel.sendMessage("Write your desired nickname in this channel:").queue();
+
+
+//        Objects.requireNonNull(event.getGuild().getTextChannelById(loginChannelID)).delete().queue(); //delete channel
+
 
     }
 
 
     public void onMessageReceived(MessageReceivedEvent event) {
 
-        if (event.getAuthor().isBot()) return; // don't respond to other bots
-        if (event.getChannel().getIdLong() != loginChannel) return; // ignore other channels
+        if (event.getAuthor().isBot()){
+            return; // don't respond to other bots
+        }
+        
+        if (!event.getChannel().getId().equals(loginChannelId)){
+            return; // ignore other channels
+        }
 
 
         String message = event.getMessage().getContentRaw();

@@ -20,19 +20,18 @@ public class Commands extends ListenerAdapter {
             eb.setDescription(Main.prefix + "commands \n" + Main.prefix + "ban \n" + Main.prefix + "translate \n" + Main.prefix + "join \n" + Main.prefix + "cat \n https://www.paypal.com/donate?hosted_button_id=HEQ9CJAGQM2W4 \n");
             eb.setColor(0xf45642);
             //eb.addField("FIELD", "FIELD", false);
-            eb.setAuthor("Raffael, Eler, Matthias", "https://www.designtagebuch.de/wp-content/uploads/mediathek//2021/05/discord-logo-1100x825.jpg");
-            eb.setFooter("LG Discord Bot Team", "https://img.icons8.com/color/search");
+            eb.setAuthor("Eler Wohlmuth, Matthias Werkl, Raffael Tomesek", "https://www.designtagebuch.de/wp-content/uploads/mediathek//2021/05/discord-logo-1100x825.jpg");
+            eb.setFooter("FH Campus bot", "https://img.icons8.com/color/search");
             //eb.setImage("IMAGE");
             //eb.setThumbnail("IMAGE");
 
             event.getChannel().sendTyping().queue();
             event.getChannel().sendMessage(eb.build()).queue();
             eb.clear();
-            System.out.println("Test");
 
         } else if (args[0].equalsIgnoreCase(Main.prefix + "whoami")) {
             event.getChannel().sendTyping().queue();
-            event.getChannel().sendMessage("Hello, World!" + user).queue();
+            event.getChannel().sendMessage("" + user).queue();
         }
     }
 }
