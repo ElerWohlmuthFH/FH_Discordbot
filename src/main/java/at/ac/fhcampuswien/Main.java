@@ -9,6 +9,8 @@ import net.dv8tion.jda.api.requests.GatewayIntent;
 import java.io.FileReader;
 import java.util.Properties;
 
+import org.apache.log4j.BasicConfigurator;
+
 import javax.security.auth.login.LoginException;
 
 class Main {
@@ -16,6 +18,7 @@ class Main {
     public static String prefix;
 
     public static void main(String[] args) throws LoginException {
+        BasicConfigurator.configure();
 
         try(FileReader reader = new FileReader("config")){
             Properties properties = new Properties();
@@ -46,6 +49,13 @@ class Main {
             e.printStackTrace();
         }
 
+        jda.addEventListener(new Ban());
+        jda.addEventListener(new Cats());
+        jda.addEventListener(new Commands());
+        jda.addEventListener(new Filter());
+        jda.addEventListener(new FirstJoin());
+        jda.addEventListener(new Join());
+        jda.addEventListener(new Mute());
     }
 
 }

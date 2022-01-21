@@ -25,9 +25,11 @@ public class Cats extends ListenerAdapter {
             }
             eb.setTitle("Random cute cat pics :)");
 
-            MessageChannel textchannel = event.getGuild().getTextChannelById(916345619805794324L);
-            assert textchannel != null;
+            MessageChannel textchannel = event.getGuild().getTextChannelById(913803468509151263L);
+            // MessageChannel textchannel = event.getChannel();
+
             assert file != null;
+            assert textchannel != null;
             textchannel.sendFile(file, "cat.png").setEmbeds(eb.build()).queue();
         }
     }
