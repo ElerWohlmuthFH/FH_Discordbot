@@ -2,7 +2,7 @@
 #This is the config file. Insert your Discord Bot Token and your prefix.
 
 
-TOKEN=OTEwODUxNTQ1NDMwNjM0NTU2.YZY2mw.pz5NBhiSKX2iMAbLLpUpLthpmv8
+TOKEN=
 PREFIX=/
 ACTIVITY=ONLINE
 LOGINCHANNELID=920973912211353650
