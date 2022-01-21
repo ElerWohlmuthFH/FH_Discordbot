@@ -5,12 +5,9 @@ import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
 import net.dv8tion.jda.api.requests.GatewayIntent;
-
 import java.io.FileReader;
 import java.util.Properties;
-
 import org.apache.log4j.BasicConfigurator;
-
 import javax.security.auth.login.LoginException;
 
 class Main {
@@ -35,13 +32,6 @@ class Main {
             String activity = properties.getProperty("ACTIVITY"); //sets activity from config file
             jda.getPresence().setActivity(Activity.playing(activity));
 
-            Setup setUp = new Setup();
-            jda.addEventListener(setUp);
-            jda.addEventListener(new FirstJoin());
-
-            jda.addEventListener(new Commands());
-            jda.addEventListener(new Cats());
-
 
             System.out.println("BOT IS ONLINE");
 
@@ -49,6 +39,7 @@ class Main {
             e.printStackTrace();
         }
 
+        jda.addEventListener(new Setup());
         jda.addEventListener(new Ban());
         jda.addEventListener(new Cats());
         jda.addEventListener(new Commands());
