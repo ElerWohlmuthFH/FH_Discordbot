@@ -1,9 +1,12 @@
 package at.ac.fhcampuswien;
 
+import net.dv8tion.jda.api.entities.MessageChannel;
+import net.dv8tion.jda.api.entities.TextChannel;
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.util.HashMap;
+import java.util.Objects;
 
 
 public class Filter extends ListenerAdapter {
@@ -27,31 +30,32 @@ public class Filter extends ListenerAdapter {
                     event.getChannel().sendMessage(" *** is a bad word " + event.getMember().getUser().getName()).queue();
                     badWord = true;
                     System.out.println(filterPerson);
+                    TextChannel textChannel = event.getChannel();
 
                     if (filterPerson.containsKey(event.getMember().getUser().getId())) {
                         filterPerson.put(event.getMember().getUser().getId(), filterPerson.get(event.getMember().getUser().getId()) + 1);
                     } else {
                         filterPerson.put(event.getMember().getUser().getId(), 1);
                     }
-
-                    if (filterPerson.get(event.getMember().getUser().getId()) > 3) {
-                        /*
+                    if (filterPerson.get(event.getMember().getUser().getId()) == 1) {
+                        textChannel.sendMessage("Noch zweimal und du wirst gebannt" + event.getMember().getUser().getName());
+                    }
+                    else if (filterPerson.get(event.getMember().getUser().getId()) == 2) {
+                        textChannel.sendMessage("Noch einmal und du wirst gebannt" + event.getMember().getUser().getName());
+                    }else if (filterPerson.get(event.getMember().getUser().getId()) == 3){
+/*
                         try {
                             Thread.sleep(1000);
-                            //TextChannel textChannel = event.getGuild().getTextChannelById(916345619805794324L);
-                            EmbedBuilder eb = new EmbedBuilder();
-                            event.getChannel().sendTyping().queue();
-                            eb.setTitle("All available commands: ");
-                            eb.setDescription("/commands \n /ban \n /translate \n /join \n");
-                            eb.setColor(0xf45642);
+                            textChannel.sendMessage( event.getMember().getUser().getName() +" wurde gebannt").queue();
+                            event.getGuild().ban(event.getMember().getUser(), 0, "REASON").queue();
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-
-                         */
+*/
                         System.out.println("TESTTESTTEST");
                         event.getGuild().ban(event.getMember().getUser(), 0, "REASON").queue();
-                        //event.getGuild().ban(event.getMember().getUser(), 1);
+
+                        //event.getGuild().ban(Objects.requireNonNull(event.getMember().getNickname()), 0, "REASON").queue();
                         System.out.println("HELLOWORLD");
 
                     }
