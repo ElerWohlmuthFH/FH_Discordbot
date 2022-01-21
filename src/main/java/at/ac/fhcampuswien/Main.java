@@ -47,6 +47,8 @@ class Main {
         jda.addEventListener(new FirstJoin());
         jda.addEventListener(new Join());
         jda.addEventListener(new Mute());
+        jda.addEventListener(new Music());
+
     }
 
 }
