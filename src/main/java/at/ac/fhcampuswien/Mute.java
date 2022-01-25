@@ -23,8 +23,7 @@ public class Mute extends ListenerAdapter {
             System.out.println("HELLOWORLD");
             member.mute(true).queue();
         } else if (args[0].equalsIgnoreCase(Main.prefix + "mute") && !event.getAuthor().isBot() && !event.getGuild().getOwnerId().equals(event.getAuthor().getId())) {
-            TextChannel tx = event.getChannel();
-            tx.sendMessage("Haste wohl gedacht").queue();
+            event.getChannel().sendMessage("Haste wohl gedacht").queue();
         }
     }
 }

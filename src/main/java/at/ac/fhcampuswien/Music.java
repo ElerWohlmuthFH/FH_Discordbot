@@ -2,6 +2,7 @@ package at.ac.fhcampuswien;
 
 import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
@@ -31,8 +32,16 @@ public class Music extends ListenerAdapter {
                 e.printStackTrace();
             }
             clip.start();//Plays audio once
+            //   }else if (args[0].equalsIgnoreCase(Main.prefix + "stop") && !event.getAuthor().isBot()) {
+            //       assert clip != null;
+            //      clip.stop();
+            //   }else if (args[0].equalsIgnoreCase(Main.prefix + "loop" + i) && !event.getAuthor().isBot()) {
+            //       assert clip != null;
+            //      clip.loop(Integer.parseInt(i));
 
-
+        }else if(args[0].equalsIgnoreCase(Main.prefix + "stop") && !event.getAuthor().isBot()) {
+            assert clip != null;
+            clip.stop();
         }
     }
 }

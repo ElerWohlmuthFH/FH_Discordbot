@@ -6,7 +6,6 @@ import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.io.FileOutputStream;
 import java.io.FileReader;
-import java.util.EnumSet;
 import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicLong;
@@ -24,28 +23,28 @@ public class Setup extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
         String[] args = event.getMessage().getContentRaw().split("\\s+"); // gets message from mod and splits every whitespace.
-        if (args[0].equalsIgnoreCase(Main.prefix + "setup") && !event.getAuthor().isBot()) {
+        if (args[0].equalsIgnoreCase(Main.prefix + "setup") && !event.getAuthor().isBot() && Objects.requireNonNull(event.getMember()).hasPermission(Permission.ADMINISTRATOR) ) {
 
 
-            event.getGuild().createTextChannel("login channel").queue(textChannel -> { //create login channel
+                event.getGuild().createTextChannel("login channel").queue(textChannel -> { //create login channel
                 loginChannelID.set(textChannel.getIdLong());
-                textChannel.createPermissionOverride(event.getGuild().getPublicRole()).grant(Permission.MESSAGE_WRITE, Permission.MESSAGE_READ).queue();
-                try {
-                    FileReader reader = new FileReader("config"); //reads config file
-                    Properties properties = new Properties();
-                    properties.load(reader);
-                    reader.close();
 
-                    properties.put("LOGINCHANNELID", String.valueOf(loginChannelID.get())); //write login channel ID to config file
+                    try{
+                        FileReader reader = new FileReader("config"); //reads config file
+                        Properties properties = new Properties();
+                        properties.load(reader);
+                        reader.close();
 
-                    FileOutputStream output = new FileOutputStream("config");
-                    properties.store(output, null);
-                    output.close();
+                        properties.put("LOGINCHANNELID", String.valueOf(loginChannelID.get())); //write login channel ID to config file
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            });
+                        FileOutputStream output = new FileOutputStream("config");
+                        properties.store(output, null);
+                        output.close();
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                });
         }
     }
 
