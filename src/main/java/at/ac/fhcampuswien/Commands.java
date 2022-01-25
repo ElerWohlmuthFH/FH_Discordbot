@@ -17,7 +17,7 @@ public class Commands extends ListenerAdapter {
             EmbedBuilder eb = new EmbedBuilder();
             event.getChannel().sendTyping().queue();
             eb.setTitle("All available commands: ");
-            eb.setDescription(Main.prefix + "commands \n" + Main.prefix + "translate \n" + Main.prefix + "whoami \n" + Main.prefix + "join \n" + Main.prefix + "mute" + Main.prefix + "setup \n" + Main.prefix + "cat \n");
+            eb.setDescription(Main.prefix + "commands \n" + Main.prefix + "translate \n" + Main.prefix + "whoami \n" + Main.prefix + "join \n" + Main.prefix + "mute \n" + Main.prefix + "setup \n" + Main.prefix + "cat \n");
             eb.setColor(0xf45642);
             //eb.addField("FIELD", "FIELD", false);
             eb.setAuthor("Eler Wohlmuth, Matthias Werkl, Raffael Tomesek", "https://www.designtagebuch.de/wp-content/uploads/mediathek//2021/05/discord-logo-1100x825.jpg");

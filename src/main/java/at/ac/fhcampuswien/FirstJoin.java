@@ -7,24 +7,14 @@ import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
 
 import java.io.FileReader;
-import java.util.Objects;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicLong;
 
 
 public class FirstJoin extends ListenerAdapter {
 
-//    private final AtomicLong loginChannelId;
-    String loginChannelString = "920973912211353650";
-//    long loginChannel = 920973912211353650L;
-    long roleEveryone = 920985272760537088L;
 
-//    public FirstJoin(AtomicLong loginChannelId) {
-//        this.loginChannelId = loginChannelId;
-//    }
-//    AtomicLong loginChannelID = new AtomicLong(); //create login Channel
-
+    String roleEveryoneId;
     String loginChannelId;
 
 
@@ -34,15 +24,12 @@ public class FirstJoin extends ListenerAdapter {
         User user = event.getUser();    // Get the user that joined.
         JDA client = event.getJDA();    // Get the already existing JDA instance.
 
-//        event.getGuild().createTextChannel("login channel").queue(textChannel -> { //create login channel
-//            loginChannelID.set(textChannel.getIdLong());
-//            // hier kannst dann id verwenden
-//        });
         try(
                 FileReader reader = new FileReader("config")){
             Properties properties = new Properties();
             properties.load(reader);
 
+            roleEveryoneId = properties.getProperty("ROLEEVERYONEID");
             loginChannelId = properties.getProperty("LOGINCHANNELID"); //sets channel ID from config file
 
         } catch (Exception e) {
@@ -59,10 +46,6 @@ public class FirstJoin extends ListenerAdapter {
         assert loginChannel != null;
         loginChannel.sendMessage("New member joined: " + user).queue();
         loginChannel.sendMessage("Write your desired nickname in this channel to continue:").queue();
-
-
-//        Objects.requireNonNull(event.getGuild().getTextChannelById(loginChannelID)).delete().queue(); //delete channel
-
 
     }
 
@@ -87,7 +70,7 @@ public class FirstJoin extends ListenerAdapter {
         channel.sendMessage("your new nickname is: " + message).queue();
 
         Guild guild = event.getGuild();
-        Role role = guild.getRoleById(roleEveryone); //INSERT ROLE ID
+        Role role = guild.getRoleById(roleEveryoneId); //INSERT ROLE ID
         assert role != null;
         guild.addRoleToMember(member.getId(), role).queue();
     }

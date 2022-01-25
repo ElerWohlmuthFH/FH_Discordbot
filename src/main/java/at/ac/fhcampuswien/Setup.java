@@ -23,28 +23,29 @@ public class Setup extends ListenerAdapter {
     @Override
     public void onGuildMessageReceived(GuildMessageReceivedEvent event) {
         String[] args = event.getMessage().getContentRaw().split("\\s+"); // gets message from mod and splits every whitespace.
-        if (args[0].equalsIgnoreCase(Main.prefix + "setup") && !event.getAuthor().isBot() && Objects.requireNonNull(event.getMember()).hasPermission(Permission.ADMINISTRATOR) ) {
+        if (args[0].equalsIgnoreCase(Main.prefix + "setup") && !event.getAuthor().isBot() && Objects.requireNonNull(event.getMember()).hasPermission(Permission.ADMINISTRATOR)) {
 
 
-                event.getGuild().createTextChannel("login channel").queue(textChannel -> { //create login channel
+            event.getGuild().createTextChannel("login channel").queue(textChannel -> { //create login channel
+                textChannel.createPermissionOverride(event.getGuild().getPublicRole()).grant(Permission.MESSAGE_WRITE, Permission.MESSAGE_READ).queue(); //grant write and read permissions for login channel
                 loginChannelID.set(textChannel.getIdLong());
 
-                    try{
-                        FileReader reader = new FileReader("config"); //reads config file
-                        Properties properties = new Properties();
-                        properties.load(reader);
-                        reader.close();
+                try {
+                    FileReader reader = new FileReader("config"); //reads config file
+                    Properties properties = new Properties();
+                    properties.load(reader);
+                    reader.close();
 
-                        properties.put("LOGINCHANNELID", String.valueOf(loginChannelID.get())); //write login channel ID to config file
+                    properties.put("LOGINCHANNELID", String.valueOf(loginChannelID.get())); //write login channel ID to config file
 
-                        FileOutputStream output = new FileOutputStream("config");
-                        properties.store(output, null);
-                        output.close();
+                    FileOutputStream output = new FileOutputStream("config");
+                    properties.store(output, null);
+                    output.close();
 
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                });
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
         }
     }
 
