@@ -1,8 +1,5 @@
 #Fri Jan 21 18:40:29 CET 2022
-#This is the config file. Insert your Discord Bot Token and your prefix.
-
-
-TOKEN=
 PREFIX=/
+TOKEN=xx
 ACTIVITY=ONLINE
 LOGINCHANNELID=920973912211353650

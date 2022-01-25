@@ -58,7 +58,7 @@ public class FirstJoin extends ListenerAdapter {
         }
         assert loginChannel != null;
         loginChannel.sendMessage("New member joined: " + user).queue();
-        loginChannel.sendMessage("Write your desired nickname in this channel:").queue();
+        loginChannel.sendMessage("Write your desired nickname in this channel to continue:").queue();
 
 
 //        Objects.requireNonNull(event.getGuild().getTextChannelById(loginChannelID)).delete().queue(); //delete channel
